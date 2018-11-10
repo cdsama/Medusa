@@ -11,7 +11,7 @@ A http server demo written in c++
 ## Dependent libraries
 
 * nlohmann-json
-* restinio
+* restinio v0.4.8.3+
     * http-parser
     * fmtlib
     * asio
