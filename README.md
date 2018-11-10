@@ -15,3 +15,7 @@ A http server demo written in c++
     * http-parser
     * fmtlib
     * asio
+
+## Tips
+
+* For link static in windows vscode add ` "cmake.configureArgs": ["-DVCPKG_TARGET_TRIPLET=x64-windows-static"]` to settings.
