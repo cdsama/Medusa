@@ -58,6 +58,15 @@ auto create_server_handler()
         return restinio::request_accepted();
     });
 
+    router->http_get("/single/:param", [](auto req, auto params) {
+        return init_resp(req->create_response())
+            .set_body(
+                fmt::format(
+                    "GET request with single parameter: '{}'",
+                    params["param"]))
+            .done();
+    });
+
     router->non_matched_request_handler([](auto req) {
         return req->create_response(restinio::status_not_found())
             .append_header_date_field()
@@ -87,7 +96,10 @@ int main(int argc, char const *argv[])
                 .port(8080)
                 .address("localhost")
                 .request_handler(create_server_handler())
-                .handle_request_timeout(seconds(1)));
+                .handle_request_timeout(1s)
+                .cleanup_func([&] {
+                    std::cout << "bye bye~" << std::endl;
+                }));
     }
     catch (const std::exception &ex)
     {
