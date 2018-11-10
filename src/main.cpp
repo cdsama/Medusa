@@ -50,6 +50,14 @@ auto create_server_handler()
         return restinio::request_accepted();
     });
 
+    router->http_get("/file", [](auto req, auto params) {
+        init_resp(req->create_response())
+            .append_header(restinio::http_field::content_type, "text/plain; charset=utf-8")
+            .set_body(restinio::sendfile("README.md"))
+            .done();
+        return restinio::request_accepted();
+    });
+
     router->non_matched_request_handler([](auto req) {
         return req->create_response(restinio::status_not_found())
             .append_header_date_field()
